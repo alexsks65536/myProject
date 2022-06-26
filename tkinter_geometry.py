@@ -8,7 +8,7 @@ frame = tk.Frame(master=window, width=1000, height=1000)
 
 frame.pack()
 
-for i in range(0, 255):
+for i in range(0, 25):
     ix = random.randint(0, 1000)
     iy = random.randint(0, 1000)
     rn = random_web()
@@ -16,3 +16,4 @@ for i in range(0, 255):
     label1.place(x=ix, y=iy)
 
 window.mainloop()
+

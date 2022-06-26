@@ -3,7 +3,7 @@ from colorutils import random_web
 
 
 window = tk.Tk()
-width_line = 20 # ширина полосы
+width_line = 20  # ширина полосы
 height_line = 1000  # высота полосы
 # rainbow_line = ['white', 'yellow', 'aqua', 'green', 'magenta', 'red', 'blue', 'black']
 # color_line = ['#FFFFFF', '#FFFF00', '#00FFFF', '#008000', '#800080', '#0000FF', '#000000']
