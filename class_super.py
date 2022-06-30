@@ -28,7 +28,6 @@ class Example(Frame):
                 fill=r_fill, width=2
             )
 
-
         canvas.pack(fill=BOTH, expand=1)
 
 
