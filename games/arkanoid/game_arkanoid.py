@@ -3,20 +3,29 @@
 pip install pgzero
 """
 import random
-
 import pgzrun
-from pgzero import screen
-from pgzero.actor import Actor
-from pgzero.keyboard import keyboard
+
+
+TITLE = "Arkanoid clone"
+WIDTH = 800
+HEIGHT = 500
+
+paddle = Actor("paddleblue.png")
+paddle.x = 120
+paddle.y = 420
+
+ball = Actor("ballblue.png")
+ball.x = 100
+ball.y = 300
+
+ball_x_speed = -1
+ball_y_speed = -1
 
 bars_list = []
-ball_x_speed = 1
-ball_y_speed = 1
-
 
 
 def draw():
-    screen.blit("background.png", (0, 0))
+    screen.blit("background.png", (0,0))
     paddle.draw()
     ball.draw()
     for bar in bars_list:
@@ -36,15 +45,17 @@ def place_bars(x, y, image):
 
 def update():
     global ball_x_speed, ball_y_speed
+    if keyboard.left:
+        paddle.x = paddle.x - 5
+    if keyboard.right:
+        paddle.x = paddle.x + 5
+
     update_ball()
     for bar in bars_list:
         if ball.colliderect(bar):
             bars_list.remove(bar)
             ball_y_speed *= -1
-    if keyboard.left:
-        paddle.x = paddle.x - 5
-    if keyboard.right:
-        paddle.x = paddle.x + 5
+
     if paddle.colliderect(ball):
         ball_y_speed *= -1
         # randomly move ball left or right on hit
@@ -54,7 +65,6 @@ def update():
 
 
 def update_ball():
-    ball_move_x = 1
     global ball_x_speed, ball_y_speed
     ball.x -= ball_x_speed
     ball.y -= ball_y_speed
@@ -63,26 +73,7 @@ def update_ball():
         ball_x_speed *= -1
     if (ball.y >= HEIGHT) or (ball.y <= 0):
         ball_y_speed *= -1
-    rand = random.randint(0, 1)
-    if rand:
-        ball_move_x *= -1
 
-
-TITLE = "Arkanoid clone"
-WIDTH = 800
-HEIGHT = 500
-
-paddle = Actor("paddleblue.png")
-paddle.x = 120
-paddle.y = 420
-
-ball = Actor("ballblue.png")
-ball.x = 30
-ball.y = 300
-
-bar = Actor("element_blue_rectangle_glossy.png")
-bar.x = 120
-bar.y = 100
 
 coloured_box_list = \
     ["element_blue_rectangle_glossy.png",
