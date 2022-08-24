@@ -4,7 +4,8 @@ pip install pgzero
 """
 import random
 import pgzrun
-import levels
+import pygame
+import time
 
 TITLE = "Arkanoid clone"
 WIDTH = 1920  # задаем размеры игрового поля
@@ -51,6 +52,11 @@ def update():
         paddle.x = paddle.x - 10  # скорость перемещения ракетки
     if keyboard.right:  # если нажата кнопка клавиатуры вправо
         paddle.x = paddle.x + 10
+    if keyboard.q:  # если нажата кнопка q клавиатуры - выход из игры
+        pass
+    if keyboard.space:
+        pause = True
+        paused()
 
     update_ball(y_level)
     for bar in bars_list:
@@ -78,24 +84,41 @@ def update_ball(y_level):
     # if (ball.y >= HEIGHT)
 
 
-# coloured_box_list = \
-#     ["element_green_rectangle_glossy.png",
-#      "element_blue_rectangle_glossy.png",
-#      "element_green_rectangle_glossy.png",
-#      "element_red_rectangle_glossy.png",
-#      "element_green_rectangle_glossy.png",
-#      "element_blue_rectangle_glossy.png",
-#      "element_green_rectangle_glossy.png", ]
-# x = 120  # координаты начала отображения блоков
-# y = 100
-# for coloured_box in coloured_box_list:
-#     place_bars(x, y, coloured_box)
-#     y += 50
+def paused():
+    largeText = pygame.font.SysFont("comicsansms", 115)
+    TextSurf, TextRect = text_objects("Paused", largeText)
+    TextRect.center = ((display_width / 2), (display_height / 2))
+    gameDisplay.blit(TextSurf, TextRect)
+
+    while pause:
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        # gameDisplay.fill(white)
+
+        button("Continue", 150, 450, 100, 50, green, bright_green, unpause)
+        button("Quit", 550, 450, 100, 50, red, bright_red, quitgame)
+
+        pygame.display.update()
+        clock.tick(15)
 
 
-for i in range(0, 6):
-    place_bars(levels.level[i], levels.level[i+1], str(levels.level[i+2]))
-
+coloured_box_list = \
+    ["element_green_rectangle_glossy.png",
+     "element_blue_rectangle_glossy.png",
+     "element_green_rectangle_glossy.png",
+     "element_red_rectangle_glossy.png",
+     "element_green_rectangle_glossy.png",
+     "element_blue_rectangle_glossy.png",
+     "element_green_rectangle_glossy.png", ]
+x = 120  # координаты начала отображения блоков
+y = 100
+for coloured_box in coloured_box_list:
+    place_bars(x, y, coloured_box)
+    y += 50
 
 
 pgzrun.go()
