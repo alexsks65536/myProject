@@ -17,10 +17,14 @@ pygame.display.set_caption('A bit Racey')
 clock = pygame.time.Clock()
 
 carImg = pygame.image.load('racecar.png')
+carImg_up = pygame.image.load('racecar_up.png')
 
 
-def car(x, y):
-    gameDisplay.blit(carImg, (x, y))
+def car(x, y, h):
+    if h == 0:
+        gameDisplay.blit(carImg, (x, y))
+    if h == 1:
+        gameDisplay.blit(carImg_up, (x, y))
 
 
 def text_objects(text, font):
@@ -50,6 +54,8 @@ def game_loop():
     y = (display_height * 0.8)
 
     x_change = 0
+    y_change = 0
+    h = 0
 
     gameExit = False
 
@@ -60,20 +66,33 @@ def game_loop():
                 pygame.quit()
                 quit()
 
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:  # если кнопка нажата
                 if event.key == pygame.K_LEFT:
                     x_change = -5
+                    h = 0
                 if event.key == pygame.K_RIGHT:
                     x_change = 5
+                    h = 0
+                if event.key == pygame.K_UP:
+                    y_change = -5
+                    h = 1
+                if event.key == pygame.K_DOWN:
+                    y_change = 5
+                    h = 1
 
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+            if event.type == pygame.KEYUP:  # если кнопка отпущена
+                if event.key == pygame.K_LEFT \
+                        or event.key == pygame.K_RIGHT \
+                        or event.key == pygame.K_UP \
+                        or event.key == pygame.K_DOWN:
                     x_change = 0
+                    y_change = 0
 
         x += x_change
+        y += y_change
 
         gameDisplay.fill(white)
-        car(x, y)
+        car(x, y, h)
 
         if x > display_width - car_width or x < 0:
             crash()
